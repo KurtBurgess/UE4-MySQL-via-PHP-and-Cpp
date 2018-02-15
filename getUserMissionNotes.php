@@ -16,10 +16,8 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 $str = "";
-// Decode JSON
-//$data= json_decode(file_get_contents('php://input'), true);
+// Get the UserID from C++
 $UserID =  $_GET["data"];
-//$UserID = $data['UserID'];
 
 // Query database
 $sql = "SELECT note_id, title, body, date_create FROM  ". $dbUserNotesTable ." WHERE user_id = '$UserID'";
@@ -36,6 +34,7 @@ if ($result->num_rows > 0) {
 
 	$theVar = array('customData' => $str);
 	$encoded = json_encode($theVar);
+// Return the data wrapped in JSON
     echo $encoded;
 $conn->close();
 
